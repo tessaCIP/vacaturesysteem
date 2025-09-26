@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <h1 class="text-3xl font-bold text-center mb-8">Inloggen</h1>
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">
