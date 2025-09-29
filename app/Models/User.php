@@ -2,16 +2,30 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    public function rollen()
+    {
+        return $this->belongsToMany(Rol::class, 'gebruikers_rol', 'gebruiker_id', 'rol_id');
+    }
+
+    public function hasRole($rolNaam)
+    {
+        return $this->rollen()->where('naam', $rolNaam)->exists();
+    }
+
+    public function hasPermission($permissieNaam)
+    {
+        return $this->rollen()->whereHas('permissies', function ($q) use ($permissieNaam) {
+            $q->where('naam', $permissieNaam);
+        })->exists();
+    }
     /**
      * The attributes that are mass assignable.
      *
