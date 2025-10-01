@@ -1,7 +1,13 @@
-<?php
 
-use App\Http\Controllers\ProfileController;
+<?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\ProfileController;
+
+Route::get('/rollen', [RolePermissionController::class, 'index'])->middleware('auth');
+Route::get('/permissies', [RolePermissionController::class, 'permissions'])->middleware('auth');
+Route::post('/rollen/{rol}/permissies', [RolePermissionController::class, 'assignPermission'])->middleware('auth');
+Route::post('/gebruikers/{user}/rollen', [RolePermissionController::class, 'assignRole'])->middleware('auth');
 
 Route::get('/', function () {
     return redirect()->route('register');
