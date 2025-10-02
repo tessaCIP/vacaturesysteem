@@ -9,21 +9,18 @@ use Illuminate\Http\Request;
 
 class RolePermissionController extends Controller
 {
-    // Overzicht van rollen
     public function index()
     {
         $rollen = Rol::with('permissies')->get();
         return view('role_permission.index', compact('rollen'));
     }
 
-    // Overzicht van permissies
     public function permissions()
     {
         $permissies = Permissie::all();
         return view('role_permission.permissions', compact('permissies'));
     }
 
-    // Koppel permissies aan een rol
     public function assignPermission(Request $request, $rolId)
     {
         $rol = Rol::findOrFail($rolId);
@@ -31,7 +28,6 @@ class RolePermissionController extends Controller
         return redirect()->back()->with('success', 'Permissies bijgewerkt!');
     }
 
-    // Koppel rollen aan een gebruiker
     public function assignRole(Request $request, $userId)
     {
         $user = User::findOrFail($userId);
