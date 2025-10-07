@@ -12,7 +12,6 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-4">
-                <!-- Dark mode toggle -->
                 <button
                     @click="dark = !dark; localStorage.setItem('theme', dark ? 'dark' : 'light'); document.documentElement.classList.toggle('dark', dark)"
                     class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
