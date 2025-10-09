@@ -1,10 +1,12 @@
 
-
 <?php
+// Registreer Fortify-routes zodat two-factor-challenge werkt
+\Laravel\Fortify\Fortify::ignoreRoutes(false);
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\EmailTwoFactorController;
 
 
 Route::get('/rollen', [RolePermissionController::class, 'index'])->middleware('auth');
@@ -23,7 +25,14 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'email2fa'])->name('dashboard');
+
+// E-mail 2FA routes
+Route::middleware('auth')->group(function () {
+    Route::get('/email-2fa', [EmailTwoFactorController::class, 'showChallenge'])->name('email-2fa.challenge');
+    Route::post('/email-2fa/send', [EmailTwoFactorController::class, 'sendCode'])->name('email-2fa.send');
+    Route::post('/email-2fa/verify', [EmailTwoFactorController::class, 'verify'])->name('email-2fa.verify');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
