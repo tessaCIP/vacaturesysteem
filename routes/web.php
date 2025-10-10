@@ -23,21 +23,17 @@ Route::get('/', function () {
     return redirect()->route('register');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'email2fa'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-// E-mail 2FA routes
-Route::middleware('auth')->group(function () {
-    Route::get('/email-2fa', [EmailTwoFactorController::class, 'showChallenge'])->name('email-2fa.challenge');
-    Route::post('/email-2fa/send', [EmailTwoFactorController::class, 'sendCode'])->name('email-2fa.send');
-    Route::post('/email-2fa/verify', [EmailTwoFactorController::class, 'verify'])->name('email-2fa.verify');
-});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('vacatures', App\Http\Controllers\VacatureController::class);
 });
 
 require __DIR__ . '/auth.php';
