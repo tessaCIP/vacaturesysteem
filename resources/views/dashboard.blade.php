@@ -22,6 +22,9 @@
                 <a href="/permissies"
                     class="block w-full text-center px-6 py-3 rounded-xl bg-blue-400 hover:bg-blue-500 text-white font-bold shadow transition">Permissies
                     overzicht</a>
+                <a href="/vacatures"
+                    class="block w-full text-center px-6 py-3 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold shadow transition">Vacature
+                    overzicht</a>
             </div>
         </div>
     </div>
